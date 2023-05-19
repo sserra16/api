@@ -14,11 +14,12 @@ export default class UsersController {
       return user
     } catch (err) {
       console.error(err)
+
       if (err.errno === 1062) {
         return { msg: 'email já cadastrado' }
       }
 
-      return { msg: 'error' }
+      return { msg: 'erro' }
     }
   }
 

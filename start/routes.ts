@@ -24,9 +24,13 @@ Route.get('/', async () => {
   return { hello: 'world' }
 })
 
-Route.post('/cadastro', async ({ auth, request }) => {
-  const email = request.input('email')
-  const password = request.input('password')
+Route.post('/cadastro', 'UsersController.create')
 
-  await auth.use('web').attempt(email, password)
+Route.post('/login', async (ctx) => {
+  const email = ctx.request.input('email')
+  const password = ctx.request.input('password')
+
+  await ctx.auth.use('web').attempt(email, password)
+
+  return { msg: 'logado com sucesso!' }
 })
