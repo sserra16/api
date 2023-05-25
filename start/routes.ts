@@ -34,3 +34,9 @@ Route.post('/login', async (ctx) => {
 
   return { msg: 'logado com sucesso!' }
 })
+
+Route.get('/logout', async ({ auth }) => {
+  await auth.use('web').logout()
+
+  return { msg: 'Deslogado com sucesso!' }
+})
