@@ -20,16 +20,17 @@
 
 import Route from '@ioc:Adonis/Core/Route'
 
-Route.post('/cadastro', 'UsersController.create')
-
-Route.post('/login', async (ctx) => {
-  const email = ctx.request.input('email')
-  const password = ctx.request.input('password')
-
-  await ctx.auth.use('web').attempt(email, password)
-
-  return { msg: 'logado com sucesso!' }
+Route.get('/', async () => {
+  return { hello: 'world' }
 })
+
+Route.post('/cadastro', 'AuthController.register')
+
+Route.post('/login', 'AuthController.login')
+
+Route.post('/forgotpassword', 'ForgotPasswordsController.store')
+
+Route.post('/resetpassword/:token/:email', 'ForgotPasswordsController.update')
 
 Route.get('/logout', async ({ auth }) => {
   await auth.use('web').logout()
@@ -38,5 +39,11 @@ Route.get('/logout', async ({ auth }) => {
 })
 
 Route.get('/google/redirect', async ({ ally }) => {
-  return ally.use('google').redirect()
+  return await ally.use('google').redirect()
+})
+
+Route.get('/google/callback', 'AuthController.googleLogin')
+
+Route.get('/facebook/redirect', async ({ ally }) => {
+  return ally.use('facebook')
 })

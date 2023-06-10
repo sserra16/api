@@ -27,7 +27,8 @@ const allyConfig: AllyConfig = {
     driver: 'google',
     clientId: Env.get('GOOGLE_CLIENT_ID'),
     clientSecret: Env.get('GOOGLE_CLIENT_SECRET'),
-    callbackUrl: 'http://localhost:3333/google/callback',
+    callbackUrl: 'http://127.0.0.1:3333/google/callback',
+    display: 'popup',
   },
   /*
 	|--------------------------------------------------------------------------
@@ -38,7 +39,7 @@ const allyConfig: AllyConfig = {
     driver: 'twitter',
     clientId: Env.get('TWITTER_CLIENT_ID'),
     clientSecret: Env.get('TWITTER_CLIENT_SECRET'),
-    callbackUrl: 'http://localhost:3333/twitter/callback',
+    callbackUrl: 'http://127.0.0.1/google/callback',
   },
   /*
   |--------------------------------------------------------------------------

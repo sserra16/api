@@ -80,6 +80,22 @@ const authConfig: AuthConfig = {
         model: () => import('App/Models/User'),
       },
     },
+
+    api: {
+      driver: 'oat',
+      provider: {
+        driver: 'lucid',
+        identifierKey: 'id',
+        uids: ['email'],
+        model: () => import('App/Models/User'),
+      },
+      tokenProvider: {
+        type: 'api',
+        driver: 'database',
+        table: 'tokens',
+        foreignKey: 'user_id',
+      },
+    },
   },
 }
 
