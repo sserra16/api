@@ -6,7 +6,7 @@ import crypto from 'crypto'
 import moment from 'moment'
 
 export default class ForgotPasswordsController {
-  public async store({ request, response, auth }: HttpContextContract) {
+  public async store({ request, response }: HttpContextContract) {
     const { email } = request.only(['email'])
 
     const user = await User.findBy('email', email)

@@ -24,6 +24,7 @@ Route.get('/', async () => {
   return { hello: 'world' }
 })
 
+/* Rotas de autenticação */
 Route.post('/cadastro', 'AuthController.register')
 
 Route.post('/login', 'AuthController.login')
@@ -38,12 +39,11 @@ Route.get('/logout', async ({ auth }) => {
   return { msg: 'Deslogado com sucesso!' }
 })
 
-Route.get('/google/redirect', async ({ ally }) => {
-  return await ally.use('google').redirect()
-})
+/* Rotas Eventos */
+Route.get('/authenticate', 'EventosController.store')
 
-Route.get('/google/callback', 'AuthController.googleLogin')
+Route.get('/eventos', 'EventosController.index')
 
-Route.get('/facebook/redirect', async ({ ally }) => {
-  return ally.use('facebook')
-})
+Route.post('/createevento', 'EventosController.create')
+
+Route.post('/destroyevent', 'EventosController.destroy')
