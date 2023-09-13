@@ -27,7 +27,15 @@ Route.get('/', async () => {
 /* Rotas de autenticação */
 Route.post('/cadastro', 'AuthController.register')
 
+Route.post('/insereimagem', 'ImageController.save')
+
+Route.get('/getimage/:id', 'ImageController.get')
+
+Route.post('/edituser', 'AuthController.editUser')
+
 Route.post('/login', 'AuthController.login')
+
+Route.post('/logingoogle', 'AuthController.loginGoogle')
 
 Route.post('/forgotpassword', 'ForgotPasswordsController.store')
 
@@ -47,3 +55,5 @@ Route.get('/eventos', 'EventosController.index')
 Route.post('/createevento', 'EventosController.create')
 
 Route.post('/destroyevent', 'EventosController.destroy')
+
+Route.post('/editevento', 'EventosController.update')

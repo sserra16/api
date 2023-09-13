@@ -46,4 +46,38 @@ export default class AuthController {
 
     return { msg: 'logado com sucesso', token }
   }
+
+  public async loginGoogle({ request, auth }: HttpContextContract) {
+    const email = request.input('email')
+    const username = request.input('username')
+    let token
+
+    const usuarioExistente = await User.findBy('email', email)
+
+    if (!usuarioExistente) {
+      const user = await User.create({ email, password: '', username })
+      token = await auth.use('api').generate(user)
+    } else {
+      token = await auth.use('api').generate(usuarioExistente)
+    }
+
+    return { msg: 'logado com sucesso', token }
+  }
+
+  public async editUser({ request }: HttpContextContract) {
+    const username = request.input('username')
+    const id = request.input('id')
+
+    const userExists = await User.findByOrFail('id', id)
+
+    if (!userExists) {
+      return { msg: 'Houve um erro ao editar o usuário' }
+    }
+
+    userExists.username = username
+
+    await userExists.save()
+
+    return { msg: 'Usuário editado' }
+  }
 }
