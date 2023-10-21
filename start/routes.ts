@@ -27,7 +27,7 @@ Route.get('/', async () => {
 /* Rotas de autenticação */
 Route.post('/cadastro', 'AuthController.register')
 
-Route.post('/insereimagem', 'ImageController.save')
+Route.post('/insereimagem', 'ImageController.saveOrUpdate')
 
 Route.get('/getimage/:id', 'ImageController.get')
 
@@ -57,3 +57,10 @@ Route.post('/createevento', 'EventosController.create')
 Route.post('/destroyevent', 'EventosController.destroy')
 
 Route.post('/editevento', 'EventosController.update')
+
+Route.post('/participar', 'EventosController.participar')
+
+/* Rotas Categorias */
+Route.get('/categorias', 'CategoriasController.index')
+
+Route.get('/categorias/:id', 'CategoriasController.show')

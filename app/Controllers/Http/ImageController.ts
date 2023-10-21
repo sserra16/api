@@ -22,22 +22,36 @@ export default class ImageController {
     }
   }
 
-  public async save({ request }: HttpContextContract) {
+  public async saveOrUpdate({ request }: HttpContextContract) {
+    let message = 'Imagem inserida!'
+
     const image = request.file('imagem')
     const id = request.input('id')
 
     if (image && image.type) {
       await image.move(Application.tmpPath('uploads'))
 
-      const avatar = new Image()
-      avatar.file_name = image.clientName
-      avatar.file_type = image.type
-      avatar.file_size = image.size.toString()
-      avatar.user_id = id
+      const imageExistente = await Image.findBy('user_id', id)
 
-      await avatar.save()
+      if (!imageExistente) {
+        const avatar = new Image()
+        avatar.file_name = image.clientName
+        avatar.file_type = image.type
+        avatar.file_size = image.size.toString()
+        avatar.user_id = id
+
+        await avatar.save()
+      } else {
+        imageExistente.file_name = image.clientName
+        imageExistente.file_type = image.type
+        imageExistente.file_size = image.size.toString()
+        imageExistente.user_id = id
+
+        await imageExistente.save()
+        message = 'Imagem Editada'
+      }
     }
 
-    return { msg: 'Imagem inserida!' }
+    return { msg: message }
   }
 }

@@ -47,18 +47,28 @@ export default class AuthController {
     return { msg: 'logado com sucesso', token }
   }
 
-  public async loginGoogle({ request, auth }: HttpContextContract) {
+  public async loginGoogle({ request, auth, response }: HttpContextContract) {
     const email = request.input('email')
     const username = request.input('username')
     let token
 
-    const usuarioExistente = await User.findBy('email', email)
+    try {
+      const usuarioExistente = await User.findBy('email', email)
 
-    if (!usuarioExistente) {
-      const user = await User.create({ email, password: '', username })
-      token = await auth.use('api').generate(user)
-    } else {
-      token = await auth.use('api').generate(usuarioExistente)
+      if (!usuarioExistente) {
+        const user = await User.create({ email, password: '', username })
+        token = await auth.use('api').generate(user)
+      } else {
+        token = await auth.use('api').generate(usuarioExistente)
+      }
+    } catch (err) {
+      console.error(err)
+
+      if (err.errno === -4078) {
+        response.status(500).send({ msg: 'Não conseguimos conectar ao banco de dados' })
+      }
+
+      return { msg: err }
     }
 
     return { msg: 'logado com sucesso', token }
