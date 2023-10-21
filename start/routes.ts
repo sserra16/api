@@ -60,6 +60,10 @@ Route.post('/editevento', 'EventosController.update')
 
 Route.post('/participar', 'EventosController.participar')
 
+Route.get('/get-enderecos', 'EventosController.BuscarEndereco')
+
+Route.get('/meus/:id', 'EventosController.MeuEventos')
+
 /* Rotas Categorias */
 Route.get('/categorias', 'CategoriasController.index')
 

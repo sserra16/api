@@ -22,6 +22,18 @@ export default class EventosController {
     return retorno
   }
 
+  public async MeuEventos({ params }: HttpContextContract) {
+    const eventos = await Evento.query().select('*').where('id_usuario', params.id)
+
+    return eventos
+  }
+
+  public async BuscarEndereco({}: HttpContextContract) {
+    const enderecos = await Evento.query().select('rua', 'cidade', 'estado', 'pais', 'cep')
+
+    return enderecos
+  }
+
   public async create({ request }: HttpContextContract) {
     const data = request.body()
 
