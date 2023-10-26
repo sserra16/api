@@ -28,6 +28,7 @@ export default class AuthController {
   public async login({ request, auth, response }: HttpContextContract) {
     const email = request.input('email')
     const password = request.input('password')
+
     let token
 
     try {
@@ -44,7 +45,7 @@ export default class AuthController {
       response.status(500).send({ error })
     }
 
-    return { msg: 'logado com sucesso', token }
+    return { msg: 'logado com sucesso', token, id: token.user.id }
   }
 
   public async loginGoogle({ request, auth, response }: HttpContextContract) {
@@ -71,7 +72,7 @@ export default class AuthController {
       return { msg: err }
     }
 
-    return { msg: 'logado com sucesso', token }
+    return { msg: 'logado com sucesso', token, id: token.user.id }
   }
 
   public async editUser({ request }: HttpContextContract) {
