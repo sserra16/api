@@ -21,7 +21,7 @@ export default class extends BaseSchema {
       table.boolean('visibilidade')
       table.integer('quantidade_maxima')
       table.integer('quantidade_atual')
-      table.integer('id_categoria').unsigned().references('categorias.id')
+      table.integer('id_categoria').unsigned()
       table.integer('id_usuario').unsigned().references('users.id')
     })
   }
